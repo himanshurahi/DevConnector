@@ -18,8 +18,14 @@ app.use(cors());
 //db connection
 db();
 
+//middleware
 app.use(express.json());
 
+//Routes
+app.use("/api/users", UserRoutes);
+app.use("/api/auth", AuthRoutes);
+app.use("/api/profile", ProfileRoutes);
+app.use("/api/post", PostRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
@@ -34,10 +40,3 @@ if (process.env.NODE_ENV === "production") {
 app.listen(port, () => {
   console.log(`Server started on ${port}`);
 });
-
-
-app.use("/api/users", UserRoutes);
-app.use("/api/auth", AuthRoutes);
-app.use("/api/profile", ProfileRoutes);
-app.use("/api/post", PostRoutes);
-
