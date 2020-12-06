@@ -21,7 +21,9 @@ router.post("/", auth, async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const post = await Post.findOne({ _id: req.params.id }).populate("user").populate("comments.user", "username");
+    const post = await Post.findOne({ _id: req.params.id })
+      .populate("user")
+      .populate("comments.user", "username");
     if (!post) {
       return res.status(404).send({ msg: "Post Not Found" });
     }
@@ -153,8 +155,8 @@ router.post("/comment/:post_id", auth, async (req, res) => {
       {
         new: true,
       }
-    ).populate("comments.user", "username")
-    res.status(200).send(post.comments)
+    ).populate("comments.user", "username");
+    res.status(200).send(post.comments);
   } catch (error) {
     res.status(500).send("Server Error");
   }
@@ -162,8 +164,8 @@ router.post("/comment/:post_id", auth, async (req, res) => {
 
 router.delete("/comment/:post_id", auth, async (req, res) => {
   const { body, comment_id } = req.body;
-  if(!comment_id){
-    console.log('no Comment Id')
+  if (!comment_id) {
+    console.log("no Comment Id");
   }
 
   try {
@@ -182,7 +184,7 @@ router.delete("/comment/:post_id", auth, async (req, res) => {
       {
         new: true,
       }
-    );
+    ).populate("comments.user");
     res.status(200).send(post.comments);
   } catch (error) {
     res.status(500).send("Server Error");
