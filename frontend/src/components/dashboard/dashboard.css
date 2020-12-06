@@ -1,0 +1,21 @@
+.dashboard {
+  color: white;
+  margin-top: 5%;
+}
+
+.mySpinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  
+}
+
+.MyButton{
+    width: 100%;
+}
+
+@media (max-width: 990px) {
+  .myButton {
+    margin-top: 20px;
+  }
+}
