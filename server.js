@@ -20,22 +20,21 @@ db();
 
 app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Server started on ${port}`);
-});
-
-// app.get("/", (req, res) => {
-//   res.send("API Dev Connector");
-// });
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "frontend/build")));
-  app.get("*", (request, response) => {
-    response.sendFile(path.join(__dirname, "frontend/build", "index.html"));
-  });
-}
-
 app.use("/api/users", UserRoutes);
 app.use("/api/auth", AuthRoutes);
 app.use("/api/profile", ProfileRoutes);
 app.use("/api/post", PostRoutes);
+
+// Serve static assets in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("frontend/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  });
+}
+
+app.listen(port, () => {
+  console.log(`Server started on ${port}`);
+});
